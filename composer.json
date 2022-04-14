@@ -1,0 +1,20 @@
+{
+    "name": "egst/psi",
+    "description": "A collection of my personal utilities.",
+    "minimum-stability": "dev",
+    "autoload": {
+        "files": ["autoload.php"]
+    },
+    "require": {
+        "php": ">=8.1"
+    },
+    "require-dev": {
+        "vimeo/psalm": "master"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/egst/psi"
+        }
+    ]
+}
