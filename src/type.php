@@ -203,7 +203,7 @@ class Type implements Stringable {
      *  @throws Exception\ClientError
      *  TODO: Does this work on enums?
      */
-    public static function named (string $class): Type {
+    public static function class (string $class): Type {
         if (!class_exists($class))
             throw new Exception\ClientError('Not a class.');
         $v = (new \ReflectionClass($class))->newInstanceWithoutConstructor();
