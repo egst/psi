@@ -26,7 +26,7 @@ class Layout {
         <!DOCTYPE html>
         <html>
             <head>
-                <? // TODO: Meta charset should be placed before the title? ?>
+                <?php // TODO: Meta charset should be placed before the title? ?>
                 <title><?= $title ?></title>
                 <?php // CSS Defaults: ?>
                 <style>
