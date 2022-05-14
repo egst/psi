@@ -31,20 +31,23 @@ class NamedType implements TypeInterface {
     }
 
     public function check (mixed $value): bool {
-        $number = Cast::nullableNumber($value);
+        /*
+        $number = Cast::nullableNumber($this->name);
         if ($number !== null)
             return $value === $number;
-        $class = Cast::nullableClassString($value);
+        */
+        $class = Cast::nullableClassString($this->name);
         if ($class !== null)
             return $value instanceof $class;
         return match ($this->name) {
-            'bool'  => is_bool($value),
-            'int'   => is_int($value),
-            'float' => is_float($value),
-            'null'  => $value === null,
-            'false' => $value === false,
-            'true'  => $value === true,
-            default => false // TODO: This should be an internal error.
+            'bool'   => is_bool($value),
+            'int'    => is_int($value),
+            'float'  => is_float($value),
+            'object' => is_object($value),
+            'null'   => $value === null,
+            'false'  => $value === false,
+            'true'   => $value === true,
+            default  => false // TODO: This should be an internal error.
         };
     }
 
