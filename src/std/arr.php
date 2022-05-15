@@ -10,7 +10,7 @@ class Arr {
      *  @param T $e
      */
     public static function contains (array $a, mixed $e): bool {
-        return in_array($e, $a);
+        return in_array($e, $a, strict: true);
     }
 
     /**
