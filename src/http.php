@@ -16,9 +16,13 @@ use \Psi\Std\Check;
 class Http {
 
     public static function getScheme (): Http\Scheme {
-        return empty($_SERVER['HTTPS'])
-            ? Http\Scheme::http
-            : Http\Scheme::https;
+        $secure =
+            (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ||
+            (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') ||
+            (!empty($_SERVER['HTTP_X_FORWARDED_SSL'])   && $_SERVER['HTTP_X_FORWARDED_SSL']   == 'on');
+        return $secure
+            ? Http\Scheme::https
+            : Http\Scheme::http;
     }
 
     public static function getMethod (): Http\Method {
