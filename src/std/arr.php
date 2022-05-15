@@ -5,6 +5,23 @@ namespace Psi\Std;
 class Arr {
 
     /**
+     *  @template T
+     *  @param array<T> $a
+     *  @param T $e
+     */
+    public static function contains (array $a, mixed $e): bool {
+        return in_array($e, $a);
+    }
+
+    /**
+     *  Equivalent to count or sizeof.
+     *  @return positive-int | 0
+     */
+    public static function size (array $a): int {
+        return count($a);
+    }
+
+    /**
      *  Equivalent to array_rand.
      *  @template Key of array-key
      *  @param non-empty-array<Key, mixed> $a

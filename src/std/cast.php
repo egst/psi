@@ -129,6 +129,18 @@ class Cast {
         return empty($s) ? null : $s;
     }
 
+    /** @return positive-int */
+    public static function positiveInt (mixed $x): int {
+        $i = Cast::int($x);
+        return $i > 1 ? $i : 1;
+    }
+
+    /** @return positive-int | 0 */
+    public static function nonNegativeInt (mixed $x): int {
+        $i = Cast::int($x);
+        return $i > 0 ? $i : 0;
+    }
+
     /** Keeps null. */
     public static function nullableObject (mixed $x): ?object {
         return $x === null ? null : (object) $x;

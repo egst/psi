@@ -119,4 +119,12 @@ class Check {
         return !Check::functionCallable($x);
     }
 
+    /**
+     *  Null if not a class name. Keeps null.
+     *  @psalm-assert-if-true class-string $x
+     */
+    public static function classString (mixed $x): bool {
+        return is_string($x) && class_exists($x);
+    }
+
 }

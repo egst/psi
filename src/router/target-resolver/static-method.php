@@ -103,7 +103,12 @@ class StaticMethod extends TargetResolver {
     private static function normalizeClass (Closure | string $matcher): Closure {
         if ($matcher instanceof Closure)
             return $matcher;
-        return fn (mixed $_) => $matcher;
+        return function (array $capture) use ($matcher) {
+            $class = Util::replaceVars($matcher, $capture);
+            if (!Check::classString($class))
+                throw new Exception\RoutingError("Class `$class` does not exist.");
+            return $class;
+        };
     }
 
     /**
@@ -113,7 +118,10 @@ class StaticMethod extends TargetResolver {
     private static function normalizeMethod (Closure | string | null $matcher): Closure {
         if ($matcher instanceof Closure)
             return $matcher;
-        return fn (mixed $_) => $matcher ?? static::$defaultMethod;
+        return fn (array $capture) => $matcher === null
+            ? static::$defaultMethod
+            : Cast::nullableString(Util::replaceVars($matcher, $capture)) ??
+                throw new Exception\RoutingError('A non-string value cannot identify a method.');
     }
 
     /**
@@ -123,7 +131,9 @@ class StaticMethod extends TargetResolver {
     private static function normalizeArgs (Closure | array | null $matcher): Closure {
         if ($matcher instanceof Closure)
             return $matcher;
-        return fn (mixed $_) => $matcher ?? [];
+        return fn (array $capture) => $matcher === null
+            ? []
+            : Util::replaceVars($matcher, $capture);
     }
 
 }

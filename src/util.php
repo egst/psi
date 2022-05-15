@@ -25,24 +25,42 @@ class Util {
     }
 
     /**
-     *  @template E
-     *  @template T as string | array<E>
-     *  @param T $target
-     *  @return (T is array ? array<E> : string)
+     *  @param string | array $target
+     *  @return ($target is array ? array : mixed)
      */
-    public static function replaceVars (string | array $target, array $capture): string | array {
-        $search  = Arr::map(Arr::keys($capture), fn ($key) => "\$$key");
-        $replace = Cast::mapString($capture);
+    public static function replaceVars (string | array $target, array $capture): mixed {
+        $variables = Arr::map(Arr::keys($capture), fn ($key) => "\$$key");
+        $replacements = Cast::mapString($capture);
         if (is_array($target)) {
             // Ignore non-string array values.
             return Arr::map($target, fn (mixed $value): mixed =>
                 /** @var mixed */
-                is_string($value)
-                    ? Str::replace($search, $replace, $value)
-                    : $value
+                is_string($value) ? self::replace($capture, $variables, $replacements, $value) : $value
             );
         }
-        return Str::replace($search, $replace, $target);
+        /** @psalm-suppress MixedReturnStatement */
+        return self::replace($capture, $variables, $replacements, $target);
+    }
+
+    /**
+     *  @param array<string> $variables
+     *  @param array<string> $replacements
+     */
+    private static function replace (
+        array  $capture,
+        array  $variables,
+        array  $replacements,
+        string $value
+    ):  mixed {
+        if (str_starts_with($value, '\:'))
+            $value = substr($value, 1);
+        else if (str_starts_with($value, ':')) {
+            $var = substr($value, 1);
+            $val = $capture[$var] ?? null;
+            if ($val !== null)
+                return $val;
+        }
+        return Str::replace($variables, $replacements, $value);
     }
 
 }
