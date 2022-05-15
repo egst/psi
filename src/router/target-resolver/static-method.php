@@ -42,27 +42,27 @@ class StaticMethod extends TargetResolver {
         $this->args   = $args   ?? fn (array $_): array  => [];
     }
 
-    /** @return class-string */
-    public function class (array $capture): string {
-        return ($this->class)($capture);
-    }
+    #/** @return class-string */
+    #public function class (array $capture): string {
+    #    return ($this->class)($capture);
+    #}
 
-    public function method (array $capture): string {
-        return ($this->method)($capture);
-    }
+    #public function method (array $capture): string {
+    #    return ($this->method)($capture);
+    #}
 
-    public function args (array $capture): array {
-        return ($this->args)($capture);
-    }
+    #public function args (array $capture): array {
+    #    return ($this->args)($capture);
+    #}
 
     /**
      *  @throws Exception\RoutingError When the arguments are incompatible or the method is not defined.
      *  @return (callable (): mixed)
      */
     public function resolve (array $capture): callable {
-        $class  = $this->class($capture);
-        $method = $this->method($capture);
-        $args   = $this->args($capture);
+        $class  = ($this->class)($capture);
+        $method = ($this->method)($capture);
+        $args   = ($this->args)($capture);
         if (!is_callable([$class, $method]))
             throw new Exception\RoutingError("The static method `$class::$method` is not defined.");
         return function () use ($class, $method, $args) {

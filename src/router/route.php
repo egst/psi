@@ -4,25 +4,26 @@ namespace Psi\Router;
 
 use \Psi\Exception;
 use \Psi\Http;
-use \Psi\Router;
 use \Psi\Router\CapturingMatch;
+use \Psi\Router\RequestMatcher;
+use \Psi\Router\TargetResolver;
 
 /** @psalm-suppress all */
 class Route {
 
-    public Router\RequestMatcher $matcher;
-    public Router\TargetResolver $resolver;
+    public RequestMatcher $matcher;
+    public TargetResolver $resolver;
 
     public final function __construct (
-        Router\RequestMatcher $match,
-        Router\TargetResolver $resolve
+        RequestMatcher $match,
+        TargetResolver $resolve
     ) {
         $this->matcher  = $match;
         $this->resolver = $resolve;
     }
 
     /** A shortcut for an empty resolver. This route will accept all requests. */
-    public static function default (Router\TargetResolver $resolve): static {
+    public static function default (TargetResolver $resolve): static {
         return new static(
             match:   new RequestMatcher,
             resolve: $resolve

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<psalm
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    resolveFromConfigFile="true"
+    errorLevel="1"
+    phpVersion="8.1"
+    usePhpDocPropertiesWithoutMagicCall="false"
+    usePhpDocMethodsWithoutMagicCall="false"
+    ensureArrayStringOffsetsExist="true"
+    ensureArrayIntOffsetsExist="true"
+    strictBinaryOperands="true"
+    findUnusedVariablesAndParams="true"
+    findUnusedCode="true"
+    runTaintAnalysis="true"
+    checkForThrowsDocblock="true"
+    ignoreInternalFunctionFalseReturn="false"
+    ignoreInternalFunctionNullReturn="false"
+    autoloader="autoload.php">
+    <projectFiles>
+        <!--<file name="autoload.php"/>-->
+        <directory name="src"/>
+    </projectFiles>
+</psalm>

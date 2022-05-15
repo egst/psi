@@ -96,15 +96,3 @@ class Router {
     }
 
 }
-
-/*
-
-    new Router([
-        new Route(
-            new RequestMatcher(fn (Http\Request $request) => test($request)),
-            new TargetResolver(fn (array        $capture) => resolve($capture['key']))
-        ),
-        # ...
-    ])
-
-*/

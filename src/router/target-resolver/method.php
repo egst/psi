@@ -43,26 +43,26 @@ class Method extends TargetResolver {
         $this->args   = $args   ?? fn (array $_): array  => [];
     }
 
-    public function object (array $capture): object {
-        return ($this->object)($capture);
-    }
+    #public function object (array $capture): object {
+    #    return ($this->object)($capture);
+    #}
 
-    public function method (array $capture): string {
-        return ($this->method)($capture);
-    }
+    #public function method (array $capture): string {
+    #    return ($this->method)($capture);
+    #}
 
-    public function args (array $capture): array {
-        return ($this->args)($capture);
-    }
+    #public function args (array $capture): array {
+    #    return ($this->args)($capture);
+    #}
 
     /**
      *  @throws Exception\RoutingError When the arguments are incompatible or the method is not defined.
      *  @return (callable (): mixed)
      */
     public function resolve (array $capture): callable {
-        $object = $this->object($capture);
-        $method = $this->method($capture);
-        $args   = $this->args($capture);
+        $object = ($this->object)($capture);
+        $method = ($this->method)($capture);
+        $args   = ($this->args)($capture);
         $class  = $object::class;
         if (!is_callable([$object, $method]))
             throw new Exception\RoutingError("The method `$class::$method` is not defined.");
