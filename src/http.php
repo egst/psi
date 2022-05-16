@@ -17,9 +17,9 @@ class Http {
 
     public static function getScheme (): Http\Scheme {
         $secure =
-            (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ||
-            (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') ||
-            (!empty($_SERVER['HTTP_X_FORWARDED_SSL'])   && $_SERVER['HTTP_X_FORWARDED_SSL']   == 'on');
+            ($_SERVER['HTTPS']                  ?? null) == 'on'    ||
+            ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? null) == 'https' ||
+            ($_SERVER['HTTP_X_FORWARDED_SSH']   ?? null) == 'on';
         return $secure
             ? Http\Scheme::https
             : Http\Scheme::http;
